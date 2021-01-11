@@ -19,9 +19,10 @@ function enrichSchema(schema){
 			(schema.paths[path][method]["x-codeSamples"]) ? schema.paths[path][method]["x-codeSamples"] : schema.paths[path][method]["x-codeSamples"] = []
 			for(var snippetIdx in generatedCode.snippets){
 				var snippet = generatedCode.snippets[snippetIdx];
-				schema.paths[path][method]["x-codeSamples"][snippetIdx] = { "lang": snippet.title, "source": snippet.content };
-			}
-			
+				if (schema.paths[path][method]["x-codeSamples"].map(function(x) {return x.lang}).indexOf(snippet.title) < 0 ) {
+					schema.paths[path][method]["x-codeSamples"].push({ "lang": snippet.title, "source": snippet.content });
+				}
+			}	
 		}
 	}
 	return schema;
