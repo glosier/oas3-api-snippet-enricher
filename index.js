@@ -21,9 +21,7 @@ function enrichSchema(schema){
 				var snippet = generatedCode.snippets[snippetIdx];
 				if (snippet.title.toLowerCase().includes('curl')) {
 					snippet.content = snippet.content.replace(/'Authorization: Basic REPLACE_BASIC_AUTH'/g, '"Authorization: Basic $(echo -n site_id:api_key | base64)"');
-				} else {
-					snippet.content = /REPLACE_BASIC_AUTH/g, 'Base64-encoded site_id:api_key');
-				}
+				} 
 				if (schema.paths[path][method]["x-codeSamples"].map(function(x) {return x.lang}).indexOf(snippet.title) < 0 ) {
 					schema.paths[path][method]["x-codeSamples"].push({ "lang": snippet.title, "source": snippet.content });
 				}
